@@ -142,7 +142,7 @@
         }
 
         /* Responsive design */
-        @media (max-width: 1024px) {
+        @media (max-width: 1100px) {
             .wrapper {
                 margin-left: auto;
                 justify-content: center;
@@ -161,6 +161,74 @@
         @media (max-width: 600px) {
             .container {
                 border-left: none;
+            }
+        }
+
+        /* iPhone XS and smaller screens */
+        @media (max-width: 400px) {
+            .private-banner {
+                margin: 12px 12px 6px 12px;
+                padding: 12px;
+                padding-right: 36px; /* Space for close button */
+            }
+
+            .private-row {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .private-text {
+                font-size: 15px;
+            }
+
+            .unlock-btn {
+                width: 100%;
+                justify-content: center;
+                margin-top: 4px;
+            }
+
+            .close-banner {
+                top: 8px;
+                right: 4px;
+                width: 28px;
+                height: 28px;
+            }
+
+            .profile-section {
+                padding: 0 12px;
+            }
+
+            .profile-details {
+                font-size: 14px;
+            }
+
+            .bio {
+                font-size: 14px;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 8px;
+                font-size: 13px;
+            }
+
+            .post {
+                padding: 12px;
+            }
+
+            .header {
+                padding: 0 12px;
+            }
+
+            .nav-tab {
+                font-size: 14px;
+                padding: 14px 8px;
+                min-width: auto;
+            }
+
+            .edit-profile-btn {
+                font-size: 14px;
+                padding: 6px 14px;
             }
         }
 
@@ -602,6 +670,7 @@
             margin: 0;
             flex: 1;
             color: rgb(15, 20, 25);
+            word-break: break-word;
         }
 
         .unlock-btn {
@@ -778,7 +847,7 @@
                             </div>
                         </div>
                         <div class="post-text">
-                            People at <a href="#">@OpenAI</a> went too far with <a href="#">@ChatGPTapp</a> personalization.
+                            People at <a href="https://x.com/OpenAI" target="_blank">@OpenAI</a> went too far with <a href="https://x.com/ChatGPTapp" target="_blank">@ChatGPTapp</a> personalization.
                             <br><br>
                             The amount of time ChatGPT spends acknowledging the personalizations prompts is ridiculous.
                             <br><br>
@@ -853,10 +922,15 @@
     </div>
 
     <script>
-        // Render email to prevent crawlers
         document.addEventListener('DOMContentLoaded', function() {
-            const parts = ['simon', '.', 'a', '.', 'let', '@', 'gmail', '.', 'com'];
-            document.getElementById('email-display').textContent = parts.join('');
+            const a = String.fromCharCode(115, 105, 109, 111, 110);
+            const b = String.fromCharCode(46, 97, 46);
+            const c = String.fromCharCode(108, 101, 116);
+            const d = String.fromCharCode(64);
+            const e = String.fromCharCode(103, 109, 97, 105, 108);
+            const f = String.fromCharCode(46, 99, 111, 109);
+            const addr = [a, b, c, d, e, f].join('');
+            document.getElementById('email-display').textContent = addr;
         });
 
         // Close private banner
