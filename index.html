@@ -427,6 +427,96 @@
             height: auto;
             display: block;
         }
+
+        /* Private Banner */
+        .private-banner {
+            margin: 16px;
+            padding: 16px;
+            background: rgb(32, 39, 52);
+            border-radius: 16px;
+            position: relative;
+        }
+
+        .private-banner.hidden {
+            display: none;
+        }
+
+        .private-content {
+            width: 100%;
+        }
+
+        .private-label {
+            color: rgb(83, 100, 113);
+            font-size: 13px;
+            font-weight: 400;
+            padding: 6px 0;
+            margin-bottom: 12px;
+        }
+
+        .private-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .private-text {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin: 0;
+            flex: 1;
+            color: #fff;
+        }
+
+        .unlock-btn {
+            padding: 5px 12px;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .unlock-btn:hover {
+            background-color: rgb(230, 230, 230);
+        }
+
+        .unlock-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .close-banner {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+            color: #fff;
+        }
+
+        .close-banner:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .close-banner svg {
+            width: 18px;
+            height: 18px;
+        }
     </style>
 </head>
 <body>
@@ -496,6 +586,27 @@
             </div>
         </div>
 
+        <!-- Private Banner -->
+        <div class="private-banner" id="privateBanner">
+            <div class="private-content">
+                <div class="private-label">Private to you</div>
+                <div class="private-row">
+                    <div class="private-text">DataDog bill higher than your infra bill?</div>
+                    <a href="https://betterstack.com" target="_blank" class="unlock-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.5 7H17v-.25c0-2.76-2.24-5-5-5s-5 2.24-5 5V7h-.5C5.12 7 4 8.12 4 9.5v9C4 19.88 5.12 21 6.5 21h11c1.39 0 2.5-1.12 2.5-2.5v-9C20 8.12 18.89 7 17.5 7zM13 14.73V17h-2v-2.27c-.59-.34-1-.99-1-1.73 0-1.1.9-2 2-2 1.11 0 2 .9 2 2 0 .74-.4 1.39-1 1.73zM15 7H9v-.25c0-1.66 1.35-3 3-3 1.66 0 3 1.34 3 3V7z"/>
+                        </svg>
+                        <span>Unlock Better Stack</span>
+                    </a>
+                </div>
+            </div>
+            <div class="close-banner" onclick="closeBanner()">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10.59 12L4.54 5.96l1.42-1.42L12 10.59l6.04-6.05 1.42 1.42L13.41 12l6.05 6.04-1.42 1.42L12 13.41l-6.04 6.05-1.42-1.42L10.59 12z"/>
+                </svg>
+            </div>
+        </div>
+
         <!-- Navigation Tabs -->
         <nav class="nav-tabs">
             <div class="nav-tab active">Posts</div>
@@ -549,6 +660,11 @@
             const parts = ['simon', '.', 'a', '.', 'let', '@', 'gmail', '.', 'com'];
             document.getElementById('email-display').textContent = parts.join('');
         });
+
+        // Close private banner
+        function closeBanner() {
+            document.getElementById('privateBanner').classList.add('hidden');
+        }
     </script>
 </body>
 </html>
