@@ -1,16 +1,517 @@
-<!-- index.html at repo root -->
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simon Let</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  </head>
-  <body>
-    <h1>Hello from simonlet.com</h1>
-  </body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #000;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            height: 53px;
+            border-bottom: 1px solid rgb(47, 51, 54);
+            position: sticky;
+            top: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+        }
+
+        .back-arrow {
+            width: 20px;
+            height: 20px;
+            margin-right: 32px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .header-info {
+            flex: 1;
+        }
+
+        .header-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .post-count {
+            font-size: 13px;
+            color: rgb(113, 118, 123);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-icon {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        /* Banner and Profile */
+        .banner {
+            height: 200px;
+            background-color: #00342a;
+            position: relative;
+        }
+
+        .profile-section {
+            padding: 0 16px;
+            margin-top: -48px;
+            position: relative;
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .avatar-container {
+            width: 133px;
+            height: 133px;
+            border-radius: 50%;
+            border: 4px solid #000;
+            overflow: hidden;
+            background: #1a1a1a;
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .edit-profile-btn {
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgb(83, 100, 113);
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .edit-profile-btn:hover {
+            background-color: rgba(239, 243, 244, 0.1);
+        }
+
+        /* Profile Info */
+        .profile-info {
+            margin-bottom: 16px;
+        }
+
+        .name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .username {
+            font-size: 15px;
+            color: rgb(113, 118, 123);
+            margin-bottom: 12px;
+        }
+
+        .bio {
+            font-size: 15px;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .bio a {
+            color: rgb(29, 155, 240);
+            text-decoration: none;
+        }
+
+        .bio a:hover {
+            text-decoration: underline;
+        }
+
+        .profile-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 15px;
+            color: rgb(113, 118, 123);
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .detail-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .detail-item a {
+            color: rgb(29, 155, 240);
+            text-decoration: none;
+        }
+
+        .detail-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .stat-item {
+            display: flex;
+            gap: 4px;
+            color: rgb(113, 118, 123);
+            cursor: pointer;
+        }
+
+        .stat-item:hover span:first-child {
+            text-decoration: underline;
+        }
+
+        .stat-item span:first-child {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            border-bottom: 1px solid rgb(47, 51, 54);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 16px;
+            text-align: center;
+            font-size: 15px;
+            color: rgb(113, 118, 123);
+            cursor: pointer;
+            transition: background-color 0.2s;
+            position: relative;
+            white-space: nowrap;
+            min-width: fit-content;
+        }
+
+        .nav-tab:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .nav-tab.active {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 56px;
+            height: 4px;
+            background-color: rgb(29, 155, 240);
+            border-radius: 2px;
+        }
+
+        /* Posts Section */
+        .posts-container {
+            min-height: 300px;
+        }
+
+        .post {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgb(47, 51, 54);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .post:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .post-header {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .post-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .post-content {
+            flex: 1;
+        }
+
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+
+        .post-author {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .post-username {
+            color: rgb(113, 118, 123);
+        }
+
+        .post-time {
+            color: rgb(113, 118, 123);
+        }
+
+        .post-text {
+            font-size: 15px;
+            color: #fff;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .post-text a {
+            color: rgb(29, 155, 240);
+            text-decoration: none;
+        }
+
+        .post-text a:hover {
+            text-decoration: underline;
+        }
+
+        .post-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .action-icon {
+            width: 18px;
+            height: 18px;
+            color: rgb(113, 118, 123);
+            cursor: pointer;
+        }
+
+        .more-icon {
+            width: 18px;
+            height: 18px;
+            color: rgb(113, 118, 123);
+            cursor: pointer;
+        }
+
+        /* Personalization Card */
+        .personalization-card {
+            background-color: rgb(22, 24, 28);
+            border-radius: 16px;
+            margin: 12px 0;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 12px;
+            background-color: rgb(30, 33, 37);
+        }
+
+        .card-title {
+            font-size: 13px;
+            color: rgb(113, 118, 123);
+        }
+
+        .card-content {
+            padding: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <svg class="back-arrow" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"/>
+            </svg>
+            <div class="header-info">
+                <div class="header-name">Simon Let</div>
+                <div class="post-count">2,247 posts</div>
+            </div>
+            <div class="header-actions">
+                <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 8v8m4-4H8"/>
+                </svg>
+                <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Banner -->
+        <div class="banner"></div>
+
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <div class="profile-header">
+                <div class="avatar-container">
+                    <img src="profile.jpg" alt="Simon Let">
+                </div>
+                <button class="edit-profile-btn">Edit profile</button>
+            </div>
+
+            <div class="profile-info">
+                <div class="name">Simon Let</div>
+                <div class="username">@curusarn</div>
+                <div class="bio">
+                    Product & Engineering <a href="https://betterstack.com" target="_blank">@BetterStack</a>
+                </div>
+                <div class="profile-details">
+                    <div class="detail-item">
+                        <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        <span>Prague</span>
+                    </div>
+                    <div class="detail-item">
+                        <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/>
+                        </svg>
+                        <a href="https://simonlet.com">simonlet.com</a>
+                    </div>
+                    <div class="detail-item">
+                        <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        <span>Joined October 2015</span>
+                    </div>
+                </div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span>1,876</span>
+                        <span>Following</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>228</span>
+                        <span>Followers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <div class="nav-tab active">Posts</div>
+            <div class="nav-tab">Replies</div>
+            <div class="nav-tab">Highlights</div>
+            <div class="nav-tab">Articles</div>
+            <div class="nav-tab">Media</div>
+            <div class="nav-tab">Likes</div>
+        </nav>
+
+        <!-- Posts Container -->
+        <div class="posts-container">
+            <article class="post">
+                <div class="post-header">
+                    <div class="post-avatar">
+                        <img src="profile.jpg" alt="Simon Let">
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-author">Simon Let</span>
+                            <span class="post-username">@curusarn</span>
+                            <span class="post-time">· 19h</span>
+                            <div style="flex: 1;"></div>
+                            <svg class="action-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.265 3.314a2.25 2.25 0 012.177 2.218c.01.158.01.317 0 .475v.073a2.25 2.25 0 01-2.177 2.178h-.73a.75.75 0 00-.733.612L16.5 10.5v6.259a3.25 3.25 0 01-3.25 3.25h-6.5a3.25 3.25 0 01-3.25-3.25V10.5l-.302-1.63a.75.75 0 00-.733-.612h-.73A2.25 2.25 0 01.5 6.032v-.058c-.01-.158-.01-.316 0-.475a2.25 2.25 0 012.177-2.178l.027-.002c2.317-.069 4.604-.373 6.83-.91.194-.047.392-.07.593-.07h4.746c.201 0 .399.023.593.07 2.226.537 4.513.841 6.83.91l.027.001z"/>
+                            </svg>
+                            <svg class="more-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="5" cy="12" r="2"/>
+                                <circle cx="12" cy="12" r="2"/>
+                                <circle cx="19" cy="12" r="2"/>
+                            </svg>
+                        </div>
+                        <div class="post-text">
+                            People at <a href="#">@OpenAI</a> went too far with <a href="#">@ChatGPTapp</a> personalization.
+                            <br><br>
+                            The amount of time ChatGPT spends acknowledging the personalizations prompts is ridiculous.
+                            <br><br>
+                            I had to remove my role and details because ChatGPT was constantly getting sidetracked by them.
+                        </div>
+                        <div class="personalization-card">
+                            <div class="card-header">
+                                <div class="card-title">Personalization</div>
+                            </div>
+                            <div class="card-content">
+                                <!-- Card content would go here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</body>
 </html>
